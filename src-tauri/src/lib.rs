@@ -434,8 +434,8 @@ fn cancel_export(manager: State<'_, ExportManager>, job_id: String) -> Result<()
     let job = manager.jobs.lock().map_err(|_| "Export manager is unavailable.".to_string())?
         .get(&job_id).cloned().ok_or_else(|| "Export job is no longer running.".to_string())?;
     job.cancelled.store(true, Ordering::Relaxed);
-    job.child.lock().map_err(|_| "Could not access the FFmpeg process.".to_string())?
-        .kill().map_err(|error| format!("Could not cancel FFmpeg: {error}"))
+    let mut child = job.child.lock().map_err(|_| "Could not access the FFmpeg process.".to_string())?;
+    child.kill().map_err(|error| format!("Could not cancel FFmpeg: {error}"))
 }
 
 fn emit_export_event(app: &AppHandle, job_id: &str, progress: f64, status: &str, message: Option<String>, output_path: Option<String>) {
