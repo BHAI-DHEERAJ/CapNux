@@ -1,0 +1,26 @@
+# Node / Vite
+node_modules/
+dist/
+.vite/
+coverage/
+*.tsbuildinfo
+
+# Rust / Tauri
+src-tauri/target/
+src-tauri/gen/
+
+# Local editor data and media
+*.capnux
+!examples/*.capnux
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.wav
+*.mp3
+
+# Local environment
+.env
+.env.*
+!.env.example
+.DS_Store

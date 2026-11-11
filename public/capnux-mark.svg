@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <defs>
+    <linearGradient id="capnux" x1="14" y1="12" x2="112" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2BE8D9"/>
+      <stop offset="1" stop-color="#087A99"/>
+    </linearGradient>
+  </defs>
+  <rect x="5" y="5" width="118" height="118" rx="31" fill="url(#capnux)"/>
+  <path d="M42 86V42L86 86V42" stroke="#071619" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M96 90L105 100" stroke="#BDFCF1" stroke-width="5" stroke-linecap="round"/>
+</svg>
