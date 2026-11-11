@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 45
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Tauri and FFmpeg system dependencies
         run: |
@@ -28,7 +28,7 @@ jobs:
             libwebkit2gtk-4.1-dev ffmpeg
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -53,7 +53,15 @@ jobs:
         run: npm run build
 
       - name: Test native media engine
-        run: cargo test --manifest-path src-tauri/Cargo.toml
+        run: |
+          set +e
+          cargo test --manifest-path src-tauri/Cargo.toml 2>&1 | tee /tmp/capnux-cargo-test.log
+          result=${PIPESTATUS[0]}
+          if [ "$result" -ne 0 ]; then
+            details=$(tail -n 40 /tmp/capnux-cargo-test.log | tr '\n' ' ' | sed 's/%/%25/g')
+            echo "::error title=Rust test diagnostics::$details"
+          fi
+          exit "$result"
 
       - name: Build Linux packages
         run: npm run tauri:build -- --bundles deb,appimage

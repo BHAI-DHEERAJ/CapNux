@@ -642,7 +642,10 @@ fn atempo_filters(speed: f64) -> Vec<String> {
         filters.push("atempo=0.5".to_string());
         remaining /= 0.5;
     }
-    if (remaining - 1.0).abs() > 0.0001 { filters.push(format!("atempo={remaining:.4}")); }
+    if (remaining - 1.0).abs() > 0.0001 {
+        let factor = if remaining == 0.5 || remaining == 2.0 { format!("{remaining:.1}") } else { format!("{remaining:.4}") };
+        filters.push(format!("atempo={factor}"));
+    }
     filters
 }
 
